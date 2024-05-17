@@ -27,10 +27,8 @@ class BasicStepsDefinition(
                 }
             }.flatten()
 
-            endpoint.let {
-                matches.fold(endpoint) { acc, pair ->
-                    acc.replace("{${pair.first}}", pair.second as String)
-                }
+            matches.fold(endpoint) { acc, pair ->
+                acc.replace("{${pair.first}}", pair.second as String)
             }
         } else endpoint
 
@@ -47,13 +45,43 @@ class BasicStepsDefinition(
 
     @When("^the (.*) \"(.*)\" endpoint is called with request params:$")
     fun `the endpoint is called with the request params`(method: String, endpoint: String, requestParams: DataTable) {
+        val processedEndpoint = if (endpoint.contains("\\{.*}".toRegex())) {
+            val matches = "\\{(.*?)}".toRegex().findAll(endpoint).map { match ->
+                match.destructured.toList().mapNotNull { key ->
+                    baseScenarioScope.objects[key]?.let { key to it }
+                }
+            }.flatten()
+
+            matches.fold(endpoint) { acc, pair ->
+                acc.replace("{${pair.first}}", pair.second as String)
+            }
+        } else endpoint
+
         val params = requestParams.asMap()
-            .map { it.key to listOf(it.value) }.toMap()
+            .map {
+                val value = if (it.value.contains("\\{.*}".toRegex())) {
+                    val matches = "\\{(.*?)}".toRegex().findAll(it.value).map { match ->
+                        match.destructured.toList().mapNotNull { key ->
+                            baseScenarioScope.objects[key]?.let { key to it }
+                        }
+                    }.flatten()
+
+                    matches.fold(it.value) { acc, pair ->
+                        acc.replace("{${pair.first}}", pair.second as String)
+                    }
+                } else it.value
+
+                it.key to listOf(value)
+            }.toMap()
             .let { LinkedMultiValueMap(it) }
 
         webTestClient.method(HttpMethod.valueOf(method))
-            .uri { it.path(endpoint).queryParams(params).build() }
-            .bodyValue(requestScenarioScope.request!!)
+            .uri { it.path(processedEndpoint).queryParams(params).build() }
+            .let {
+                if (requestScenarioScope.request != null) {
+                    it.bodyValue(requestScenarioScope.request!!)
+                } else it
+            }
             .exchange()
             .let { responseScenarioScope.responseSpec = it }
     }

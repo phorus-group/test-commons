@@ -17,3 +17,19 @@ Feature: Basic steps work as intended
       | param | testParam |
     Then the service returns HTTP 200
     And the service returns the request param with value "testParam"
+
+  Scenario: Caller with a dynamic request with params
+    Given a theoretical User entity is created
+    And the caller has a request object
+    When the POST "/test" endpoint is called with request params:
+      | param | {userID} |
+    Then the service returns HTTP 200
+    And the service returns the request param with value "testUserID"
+
+  Scenario: Caller with a path variable and a dynamic request with params
+    Given a theoretical User entity is created
+    And the caller has a request object
+    When the POST "/test/{userID}" endpoint is called with request params:
+      | param | {userID} |
+    Then the service returns HTTP 200
+    And the service returns the request param with value "testUserID.testUserID"
