@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 
-internal class RestResponsePage<T> : PageImpl<T> {
+class RestResponsePage<T> : PageImpl<T> {
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     constructor(
         @JsonProperty("content") content: List<T>,
