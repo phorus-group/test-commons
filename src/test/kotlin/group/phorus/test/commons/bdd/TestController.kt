@@ -4,11 +4,7 @@ import io.cucumber.spring.ScenarioScope
 import org.springframework.context.annotation.Primary
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class TestController {
@@ -21,4 +17,11 @@ class TestController {
         @RequestParam(required = false)
         param: String?,
     ): String? = param
+
+    @GetMapping(path = ["/test/{pathVariable}"])
+    @ResponseStatus(HttpStatus.OK)
+    suspend fun testPathVariable(
+        @PathVariable
+        pathVariable: String?,
+    ): String? = pathVariable
 }
