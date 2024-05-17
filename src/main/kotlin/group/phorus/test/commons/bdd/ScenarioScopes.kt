@@ -7,6 +7,12 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @Component
 @ScenarioScope
+class BaseScenarioScope(
+    var objects: MutableMap<String, Any> = mutableMapOf(),
+)
+
+@Component
+@ScenarioScope
 class BaseRequestScenarioScope(
     var request: Any? = null,
 )
