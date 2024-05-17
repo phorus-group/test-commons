@@ -21,7 +21,7 @@ plugins {
 
 group = "group.phorus"
 description = "Library containing common Spring WebFlux test functions."
-version = "1.0.0"
+version = "1.0.1"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -38,7 +38,8 @@ dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
-    
+    implementation("org.springframework.data:spring-data-commons")
+
     // Test
     implementation("org.springframework.boot:spring-boot-starter-test")
     api("org.junit.platform:junit-platform-suite:1.10.2")

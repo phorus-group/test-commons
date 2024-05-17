@@ -7,12 +7,12 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @Component
 @ScenarioScope
-open class BaseRequestScenarioScope(
+class BaseRequestScenarioScope(
     var request: Any? = null,
 )
 
 @Component
 @ScenarioScope
-open class BaseResponseScenarioScope(
+class BaseResponseScenarioScope(
     var responseSpec: WebTestClient.ResponseSpec? = null,
 )
