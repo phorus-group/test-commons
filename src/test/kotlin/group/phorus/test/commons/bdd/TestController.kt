@@ -24,4 +24,17 @@ class TestController {
         @PathVariable
         pathVariable: String?,
     ): String? = pathVariable
+
+    @PostMapping(path = ["/test/{pathVariable}"])
+    @ResponseStatus(HttpStatus.OK)
+    suspend fun testPathVariable(
+        @PathVariable
+        pathVariable: String?,
+
+        @RequestBody
+        request: String,
+
+        @RequestParam(required = false)
+        param: String?,
+    ): String? = "${pathVariable}.${param}"
 }
