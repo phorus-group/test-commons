@@ -26,8 +26,8 @@ class ExtraStepsDefinition(
     }
 
 
-    @Then("the service returns the request param with value {string}")
-    fun `the service returns the request param`(value: String) {
+    @Then("the service returns {string}")
+    fun `the service returns`(value: String) {
         val param = responseScenarioScope.responseSpec!!
             .expectBody<String>().returnResult().responseBody
 
