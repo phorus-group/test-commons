@@ -42,7 +42,7 @@ dependencies {
 
     // Test
     implementation("org.springframework.boot:spring-boot-starter-test")
-    api("org.junit.platform:junit-platform-suite:1.10.2")
+    api("org.junit.platform:junit-platform-suite:1.10.3")
     api("io.cucumber:cucumber-java:7.18.0")
     api("io.cucumber:cucumber-junit-platform-engine:7.18.0")
     api("io.cucumber:cucumber-spring:7.18.0")
