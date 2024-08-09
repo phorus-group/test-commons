@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   group.phorus.test.commons.bdd.steps.BasicStepsDefinition,\
+  group.phorus.test.commons.bdd.BaseScenarioScope,\
   group.phorus.test.commons.bdd.BaseRequestScenarioScope,\
   group.phorus.test.commons.bdd.BaseResponseScenarioScope
