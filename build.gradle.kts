@@ -21,7 +21,7 @@ plugins {
 
 group = "group.phorus"
 description = "Library containing common Spring WebFlux test functions."
-version = "1.1.1"
+version = "1.1.2"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
