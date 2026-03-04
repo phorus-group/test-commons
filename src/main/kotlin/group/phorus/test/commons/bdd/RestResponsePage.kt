@@ -2,12 +2,12 @@ package group.phorus.test.commons.bdd
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.JsonNode
+import tools.jackson.databind.JsonNode
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 
-class RestResponsePage<T> : PageImpl<T> {
+class RestResponsePage<T : Any> : PageImpl<T> {
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     constructor(
         @JsonProperty("content") content: List<T>,
