@@ -7,7 +7,6 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.web.reactive.server.expectBody
 
 
 class ExtraStepsDefinition(
@@ -28,9 +27,7 @@ class ExtraStepsDefinition(
 
     @Then("the service returns {string}")
     fun `the service returns`(value: String) {
-        val param = responseScenarioScope.responseSpec!!
-            .expectBody<String>().returnResult().responseBody
-
+        val param = responseScenarioScope.responseBody?.toString(Charsets.UTF_8)
         assertEquals(value, param)
     }
 }

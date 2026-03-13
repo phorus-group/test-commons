@@ -76,6 +76,7 @@ reusable step definitions and scenario-scoped beans that all your services can s
 
 - **Built-in step definitions** for HTTP calls (`GET`, `POST`, `PUT`, `DELETE`) with query parameters, headers, and path variables
 - **Scenario-scoped state** beans to share data between steps within a single scenario
+- **Type-safe helper extensions** like `bodyAs<T>()`, `pageBodyAs<T>()`, and `get<T>()` for clean deserialization and state retrieval
 - **Dynamic path variable resolution** using `{variableName}` placeholders in endpoint URLs
 - **`RestResponsePage`** for deserializing Spring `Page` responses in tests
 - **Automatic registration**, add the dependency and the beans are available via Spring autoconfiguration
@@ -276,6 +277,12 @@ baseScenarioScope.objects["entityId"] = createdEntity.id.toString()
 // When the GET "/entity/{entityId}" endpoint is called
 ```
 
+The `get()` extension provides a type-safe way to retrieve values:
+
+```kotlin
+val id: String? = baseScenarioScope.get("entityId")
+```
+
 ### BaseRequestScenarioScope
 
 Holds the request body for the next HTTP call.
@@ -299,26 +306,44 @@ fun `the caller has an entity request`() {
 
 ### BaseResponseScenarioScope
 
-Holds the `WebTestClient.ResponseSpec` from the last HTTP call.
+Holds the captured HTTP response for the current scenario. The response body is eagerly buffered
+after each HTTP call, so it can be read multiple times across different steps.
 
 ```kotlin
 @Component
 @ScenarioScope
 class BaseResponseScenarioScope(
-    var responseSpec: WebTestClient.ResponseSpec? = null,
+    var statusCode: Int? = null,
+    var responseHeaders: HttpHeaders? = null,
+    var responseBody: ByteArray? = null,
 )
 ```
 
-Use it in your `Then` steps to assert the response body:
+Use the `bodyAs()` extension to deserialize the buffered response body. It preserves full generic
+type parameters, making it safe with parameterized types:
 
 ```kotlin
 @Then("the response contains the entity")
 fun `the response contains the entity`() {
-    val body = responseScenarioScope.responseSpec!!
-        .expectBody<EntityResponse>().returnResult().responseBody!!
+    val body = responseScenarioScope.bodyAs<EntityResponse>(objectMapper)!!
 
     assertEquals("Example", body.name)
 }
+```
+
+For paginated responses, `pageBodyAs()` is a shorthand that wraps the type in `RestResponsePage`:
+
+```kotlin
+val page = responseScenarioScope.pageBodyAs<EntityResponse>(objectMapper)!!
+assertEquals(1, page.totalElements)
+```
+
+You can also access the raw fields directly when needed:
+
+```kotlin
+val status = responseScenarioScope.statusCode
+val raw = responseScenarioScope.responseBody?.toString(Charsets.UTF_8)
+val headers = responseScenarioScope.responseHeaders
 ```
 
 ### Extending scenario scopes
@@ -342,9 +367,7 @@ The library provides `RestResponsePage<T>`, a `PageImpl` subclass with Jackson a
 you can deserialize paginated responses in your tests:
 
 ```kotlin
-val page = responseScenarioScope.responseSpec!!
-    .expectBody<RestResponsePage<EntityResponse>>()
-    .returnResult().responseBody!!
+val page = responseScenarioScope.pageBodyAs<EntityResponse>(objectMapper)!!
 
 assertEquals(1, page.totalElements)
 assertEquals("Example", page.content.first().name)
@@ -408,10 +431,7 @@ class RequestStepDefinitions(
 // Asserts the response body using BaseResponseScenarioScope
 @Then("the response contains the entity data")
 fun `the response contains the entity data`() {
-    val response = responseScenarioScope.responseSpec!!
-        .expectBody<EntityResponse>()
-        .returnResult()
-        .responseBody!!
+    val response = responseScenarioScope.bodyAs<EntityResponse>(objectMapper)!!
 
     assertNotNull(response.id)
     assertNotNull(response.name)
@@ -420,10 +440,7 @@ fun `the response contains the entity data`() {
 
 @Then("the response contains a token")
 fun `the response contains a token`() {
-    val response = responseScenarioScope.responseSpec!!
-        .expectBody<TokenResponse>()
-        .returnResult()
-        .responseBody!!
+    val response = responseScenarioScope.bodyAs<TokenResponse>(objectMapper)!!
 
     assertNotNull(response.accessToken)
     assertTrue(response.accessToken.token.isNotBlank())
