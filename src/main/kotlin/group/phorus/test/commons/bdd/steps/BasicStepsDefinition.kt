@@ -6,9 +6,11 @@ import group.phorus.test.commons.bdd.BaseScenarioScope
 import io.cucumber.datatable.DataTable
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 
@@ -21,11 +23,11 @@ class BasicStepsDefinition(
 ) {
     @When("^the (.*) \"(.*)\" endpoint is called$")
     fun `the endpoint is called`(method: String, endpoint: String) {
-        responseScenarioScope.responseSpec = callEndpoint(
+        bufferResponse(callEndpoint(
             endpoint.process(baseScenarioScope.objects),
             HttpMethod.valueOf(method),
             requestScenarioScope.request
-        )
+        ))
     }
 
     @When("^the (.*) \"(.*)\" endpoint is called:$")
@@ -56,21 +58,27 @@ class BasicStepsDefinition(
             } else null
         }.toMap()
 
-        responseScenarioScope.responseSpec = callEndpoint(
+        bufferResponse(callEndpoint(
             endpoint.process(baseScenarioScope.objects),
             HttpMethod.valueOf(method),
             requestScenarioScope.request,
             params,
             headers,
-        )
+        ))
     }
 
     @Then("the service returns HTTP {int}")
     fun `the service returns HTTP`(httpCode: Int) {
-        responseScenarioScope.responseSpec!!
-            .expectStatus().isEqualTo(httpCode)
+        assertEquals(httpCode, responseScenarioScope.statusCode)
     }
 
+
+    private fun bufferResponse(spec: WebTestClient.ResponseSpec) {
+        val result = spec.expectBody<ByteArray>().returnResult()
+        responseScenarioScope.statusCode = result.status.value()
+        responseScenarioScope.responseHeaders = result.responseHeaders
+        responseScenarioScope.responseBody = result.responseBody
+    }
 
     private fun String.process(objects: MutableMap<String, Any>): String {
         return if (this.contains("\\{.*}".toRegex())) {

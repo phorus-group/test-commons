@@ -21,7 +21,7 @@ ext["jackson-bom.version"] = "3.1.0"
 
 group = "group.phorus"
 description = "Library containing common Spring WebFlux test functions."
-version = "1.1.6"
+version = "1.1.7"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
