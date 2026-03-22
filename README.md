@@ -2,6 +2,7 @@
 
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Maven Central](https://img.shields.io/maven-central/v/group.phorus/test-commons)](https://mvnrepository.com/artifact/group.phorus/test-commons)
+[![codecov](https://codecov.io/gh/phorus-group/test-commons/branch/main/graph/badge.svg)](https://codecov.io/gh/phorus-group/test-commons)
 
 BDD integration testing library for Spring Boot WebFlux services. Provides reusable
 [Cucumber](https://cucumber.io/) step definitions, scenario-scoped state management, and HTTP
