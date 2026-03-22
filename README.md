@@ -79,7 +79,7 @@ reusable step definitions and scenario-scoped beans that all your services can s
 - **Type-safe helper extensions** like `bodyAs<T>()`, `pageBodyAs<T>()`, and `get<T>()` for clean deserialization and state retrieval
 - **Dynamic path variable resolution** using `{variableName}` placeholders in endpoint URLs
 - **`RestResponsePage`** for deserializing Spring `Page` responses in tests
-- **Automatic registration**, add the dependency and the beans are available via Spring autoconfiguration
+- **Autoconfigured**: scenario scope beans and step definitions are registered via Spring Boot autoconfiguration
 - **Extensible**, add your own step definitions that build on the provided scenario scopes
 
 ## Getting started
@@ -175,7 +175,7 @@ one scenario never leaks into another.
 
 ## Built-in step definitions
 
-The library provides `BasicStepsDefinition` with the following steps out of the box.
+The library provides `BasicStepsDefinition` with the following steps.
 
 ### Endpoint calls
 
