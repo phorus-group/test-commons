@@ -15,6 +15,18 @@ import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 
 
+/**
+ * Cucumber step definitions for issuing HTTP requests and asserting response status codes.
+ *
+ * Provides two `@When` steps:
+ * - Call an endpoint with a method and path (placeholders like `{id}` are resolved from [BaseScenarioScope]).
+ * - Call an endpoint with an additional Cucumber [DataTable] carrying query params and/or headers.
+ *
+ * Provides one `@Then` step that asserts the HTTP status code stored in [BaseResponseScenarioScope].
+ *
+ * Responses are buffered into [BaseResponseScenarioScope] so downstream steps can inspect the
+ * status code, headers, and body independently.
+ */
 class BasicStepsDefinition(
     @Autowired private val webTestClient: WebTestClient,
     @Autowired private val baseScenarioScope: BaseScenarioScope,

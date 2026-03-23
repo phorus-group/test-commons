@@ -7,6 +7,12 @@ import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 
+/**
+ * A [PageImpl] subclass that can be deserialized from a Spring paginated JSON response.
+ *
+ * Jackson's `@JsonCreator` constructor accepts every field Spring serializes for a `Page`,
+ * so test code can read paginated endpoint responses directly into a typed page object.
+ */
 class RestResponsePage<T : Any> : PageImpl<T> {
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     constructor(
