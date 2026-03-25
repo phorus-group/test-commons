@@ -35,14 +35,14 @@ repositories {
 
 dependencies {
     // Spring
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    api("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
-    implementation("org.springframework.data:spring-data-commons")
-    implementation("com.fasterxml.jackson.core:jackson-databind")
+    api("org.springframework.data:spring-data-commons")
+    api("com.fasterxml.jackson.core:jackson-databind")
 
     // Test
-    implementation("org.springframework.boot:spring-boot-starter-test")
-    implementation("org.springframework.boot:spring-boot-webtestclient")
+    api("org.springframework.boot:spring-boot-starter-test")
+    api("org.springframework.boot:spring-boot-webtestclient")
     api("org.junit.platform:junit-platform-suite")
     api("io.cucumber:cucumber-java:7.34.2")
     api("io.cucumber:cucumber-junit-platform-engine:7.34.2")
