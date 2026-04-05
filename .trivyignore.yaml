@@ -1,0 +1,7 @@
+vulnerabilities:
+  - id: GHSA-2m67-wjpj-xhg9
+    reason: >
+      No fixed version available for tools.jackson.core:jackson-core (affects >= 3.0.0, <= 3.1.0).
+      Jackson 3.x is a required transitive dependency of Spring Boot 4.x / Spring Framework 7.x,
+      which this library targets. Will remove suppression once a patched version is released.
+    statement: will_not_fix
