@@ -23,7 +23,7 @@ ext["spring-framework.version"] = "7.0.6"
 
 group = "group.phorus"
 description = "Library containing common Spring WebFlux test functions."
-version = "1.1.8"
+version = "1.1.9"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
