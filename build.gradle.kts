@@ -21,6 +21,14 @@ ext["jackson-bom.version"] = "3.1.0"
 ext["netty.version"] = "4.2.11.Final"
 ext["spring-framework.version"] = "7.0.6"
 
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.bouncycastle") {
+            useVersion("1.84")
+        }
+    }
+}
+
 group = "group.phorus"
 description = "Library containing common Spring WebFlux test functions."
 version = "1.1.9"
