@@ -35,6 +35,14 @@ repositories {
     mavenCentral()
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.bouncycastle") {
+            useVersion("1.84")
+        }
+    }
+}
+
 dependencies {
     // Spring
     api("org.springframework.boot:spring-boot-starter-webflux")
