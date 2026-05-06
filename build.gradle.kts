@@ -18,7 +18,7 @@ plugins {
 
 ext["jackson-2-bom.version"] = "2.21.1"
 ext["jackson-bom.version"] = "3.1.0"
-ext["netty.version"] = "4.2.11.Final"
+ext["netty.version"] = "4.2.13.Final"
 ext["spring-framework.version"] = "7.0.6"
 
 group = "group.phorus"
@@ -33,6 +33,14 @@ java {
 
 repositories {
     mavenCentral()
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.bouncycastle") {
+            useVersion("1.84")
+        }
+    }
 }
 
 dependencies {
