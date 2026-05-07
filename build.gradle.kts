@@ -6,7 +6,7 @@ import java.net.URI
 import java.time.LocalDate
 
 plugins {
-    id("org.springframework.boot") version "4.0.3"
+    id("org.springframework.boot") version "4.0.6"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.spring") version "2.3.10"
     kotlin("jvm") version "2.3.10"
@@ -17,13 +17,13 @@ plugins {
 }
 
 ext["jackson-2-bom.version"] = "2.21.1"
-ext["jackson-bom.version"] = "3.1.0"
-ext["netty.version"] = "4.2.11.Final"
-ext["spring-framework.version"] = "7.0.6"
+ext["jackson-bom.version"] = "3.1.1"
+ext["netty.version"] = "4.2.13.Final"
+ext["spring-framework.version"] = "7.0.7"
 
 group = "group.phorus"
 description = "Library containing common Spring WebFlux test functions."
-version = "1.1.8"
+version = "1.1.10"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -51,6 +51,13 @@ dependencies {
     api("io.cucumber:cucumber-spring:7.34.2")
 }
 
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.bouncycastle") {
+            useVersion("1.84")
+        }
+    }
+}
 
 val repoUrl = System.getenv("GITHUB_REPOSITORY")?.let { "https://github.com/$it" }
     ?: "https://github.com/phorus-group/test-commons"
