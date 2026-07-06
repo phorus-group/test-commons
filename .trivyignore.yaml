@@ -5,3 +5,31 @@ vulnerabilities:
       Jackson 3.x is a required transitive dependency of Spring Boot 4.x / Spring Framework 7.x,
       which this library targets. Will remove suppression once a patched version is released.
     statement: will_not_fix
+  - id: CVE-2026-54513
+    reason: >
+      No fixed version available for tools.jackson.core:jackson-databind in the 3.x series.
+      Jackson 3.x is a required transitive dependency of Spring Boot 4.x / Spring Framework 7.x.
+      Will remove suppression once a patched version is released.
+    statement: will_not_fix
+  - id: CVE-2026-54514
+    reason: >
+      No fixed version available for com.fasterxml.jackson.core:jackson-databind in the 2.x series.
+      Will remove suppression once a patched version is released.
+    statement: will_not_fix
+  - id: CVE-2026-54516
+    reason: >
+      No fixed version available for tools.jackson.core:jackson-databind in the 3.x series.
+      Jackson 3.x is a required transitive dependency of Spring Boot 4.x / Spring Framework 7.x.
+      Will remove suppression once a patched version is released.
+    statement: will_not_fix
+  - id: CVE-2026-54517
+    reason: >
+      No fixed version available for jackson-databind in any supported series.
+      Will remove suppression once a patched version is released.
+    statement: will_not_fix
+  - id: CVE-2026-54518
+    reason: >
+      No fixed version available for tools.jackson.core:jackson-databind in the 3.x series.
+      Jackson 3.x is a required transitive dependency of Spring Boot 4.x / Spring Framework 7.x.
+      Will remove suppression once a patched version is released.
+    statement: will_not_fix
