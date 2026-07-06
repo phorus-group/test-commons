@@ -41,7 +41,7 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     api("org.springframework.data:spring-data-commons")
-    api("com.fasterxml.jackson.core:jackson-databind")
+    api("tools.jackson.core:jackson-databind")
 
     // Test
     api("org.springframework.boot:spring-boot-starter-test")

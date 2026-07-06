@@ -1,7 +1,7 @@
 package group.phorus.test.commons.bdd
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
+import tools.jackson.annotation.JsonCreator
+import tools.jackson.annotation.JsonProperty
 import tools.jackson.databind.JsonNode
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
