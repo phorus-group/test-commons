@@ -22,7 +22,7 @@ ext["log4j2.version"] = "2.25.5"
 ext["logback.version"] = "1.5.34"
 ext["netty.version"] = "4.2.17.Final"
 ext["spring-data-bom.version"] = "2025.1.6"
-ext["spring-framework.version"] = "7.0.8"
+ext["spring-framework.version"] = "7.0.9"
 
 group = "group.phorus"
 description = "Library containing common Spring WebFlux test functions."
